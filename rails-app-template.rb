@@ -1,9 +1,7 @@
-# app-template.rb
-# Usage:
-# rails new app-name --database=postgresql -m app-template.rb
+# rails-app-template.rb
+# Usage: rails new app-name --database=postgresql -m ./rails-app-templates/rails-app-template.rb
 
 # Add commonly used gems
-# gem 'pg'
 # gem 'haml'
 # gem 'haml-rails'
 gem "therubyracer"
@@ -25,9 +23,11 @@ gsub_file "Gemfile", /^gem\s+["']sqlite3["'].*$/,''
 # Set ruby version for Heroku
 # insert_into_file 'Gemfile', "\nruby '2.0.0'", after: "source 'https://rubygems.org'\n"
 
-# install bundles so their installers will work
+# Bundle!
 run "bundle install"
 
+# Just in case, drop before creating the DB
+rake("db:drop")
 rake("db:create")
 
 # Install Bootstrap 3 with Less
@@ -47,25 +47,30 @@ run "rails g bootstrap:themed Users -f"
 
 route "root to: 'users#index'"
 
+# $ ->                                                                                                                                                                                    #Load fancybox iframes to browser size
+# # Inititate the datatable
+# $('.datatable').DataTable()
+
 # hide secret data from git
 # append_file '.gitignore', 'config/database.yml'
 # append_file '.gitignore', '.env'
 # run 'cp config/database.yml config/example_database.yml'
-# run 'touch .env'
-# append_file '.env', 'PORT=3000'
-# run 'cp .env .env.sample'
 
+# Make an env file
+run 'touch .env'
+
+# Do the initial commit
 git :init
 git add: "."
 git commit: %Q{ -m 'Initial commit' }
 
 # heroku login
-# run "heroku create"
-# run "git push heroku master"
-# run "heroku run rake db:migrate"
-# run "heroku run rake db:seed"
+run "heroku create"
+run "git push heroku master"
+run "heroku run rake db:migrate"
+run "heroku run rake db:seed"
 
 # Open project
-run "a"
+run "atom ."
 
 run "rails s"
