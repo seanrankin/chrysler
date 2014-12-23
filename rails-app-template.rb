@@ -45,26 +45,27 @@ rake("db:seed")
 
 run "rails g bootstrap:themed Users -f"
 
+# Update the default root
 route "root to: 'users#index'"
-
-# $ ->                                                                                                                                                                                    #Load fancybox iframes to browser size
-# # Inititate the datatable
-# $('.datatable').DataTable()
 
 # hide secret data from git
 # append_file '.gitignore', 'config/database.yml'
 # append_file '.gitignore', '.env'
-# run 'cp config/database.yml config/example_database.yml'
+
 
 # Make an env file
 run 'touch .env'
+# append_file '.env', 'PORT=3000'
+
+# Create a default coffeescript file
+run 'cp ~/Projects/rails-app-templates/scripts.coffee app/assets/javascripts/scripts.coffee'
 
 # Do the initial commit
 git :init
 git add: "."
 git commit: %Q{ -m 'Initial commit' }
 
-# heroku login
+# Create and push to heroku
 run "heroku create"
 run "git push heroku master"
 run "heroku run rake db:migrate"
@@ -74,3 +75,4 @@ run "heroku run rake db:seed"
 run "atom ."
 
 run "rails s"
+# run "open http://localhost:3000"
