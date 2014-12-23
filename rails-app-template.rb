@@ -1,6 +1,9 @@
 # rails-app-template.rb
 # Usage: rails new app-name --database=postgresql -m ./rails-app-templates/rails-app-template.rb
 
+# Ask the name of the app for Heroku
+appname = ask("What do you want to call this app?")
+
 # Add commonly used gems
 # gem 'haml'
 # gem 'haml-rails'
@@ -52,7 +55,6 @@ route "root to: 'users#index'"
 # append_file '.gitignore', 'config/database.yml'
 # append_file '.gitignore', '.env'
 
-
 # Make an env file
 run 'touch .env'
 # append_file '.env', 'PORT=3000'
@@ -66,12 +68,13 @@ git add: "."
 git commit: %Q{ -m 'Initial commit' }
 
 # Create and push to heroku
-run "heroku create"
+run "heroku create #{appname}"
 run "git push heroku master"
 run "heroku run rake db:migrate"
 run "heroku run rake db:seed"
+run "heroku open #{appname}"
 
-# Open project
+# Open project in Atom
 run "atom ."
 
 run "rails s"
