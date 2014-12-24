@@ -11,10 +11,10 @@ Recently I've found myself provisioning new rails apps on an almost daily basis 
 Install
 -------
 
-Clone then run:
+Carefully review the script then run:
 
 ```
-rails new app-name --database=postgresql -m ./rails-app-templates/rails-app-template.rb
+rails new app-name --database=postgresql -m https://raw.githubusercontent.com/seanrankin/chrysler/master/rails-app-template.rb
 
 ```
 
