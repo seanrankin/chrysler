@@ -7,6 +7,10 @@ if publish
   appname = ask("What do you want to call this app?")
 end
 
+# Get the path of the application template
+# path = File.expand_path File.dirname(__FILE__)
+# run "cp #{path}/templates/Procfile Procfile"
+
 # Ask the name of the app for Heroku
 haml = yes? "Do you want to use HAML for templating?"
 if haml
@@ -15,6 +19,7 @@ if haml
 end
 
 # Add commonly used gems
+# gem('compass-rails', group: :assets)
 gem "therubyracer"
 gem "less-rails"
 gem "twitter-bootstrap-rails"
