@@ -59,8 +59,9 @@ route "root to: 'users#index'"
 run 'touch .env'
 # append_file '.env', 'PORT=3000'
 
-# Create a default coffeescript file
-run 'cp ~/Projects/rails-app-templates/scripts.coffee app/assets/javascripts/scripts.coffee'
+# Create a default files
+run "cp ~/Projects/rails-app-templates/scripts.coffee app/assets/javascripts/scripts.coffee"
+run "cp -f ~/Projects/rails-app-templates/application.html.erb app/views/layouts/application.html.erb"
 
 # Do the initial commit
 git :init
@@ -72,7 +73,7 @@ run "heroku create #{appname}"
 run "git push heroku master"
 run "heroku run rake db:migrate"
 run "heroku run rake db:seed"
-run "heroku open #{appname}"
+run "heroku open --app #{appname}"
 
 # Open project in Atom
 run "atom ."
