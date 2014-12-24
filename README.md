@@ -14,7 +14,7 @@ Install
 Carefully review the script then run:
 
 ```
-rails new app-name --database=postgresql -m https://raw.githubusercontent.com/seanrankin/chrysler/master/rails-app-template.rb
+rails new app-name --database=postgresql -m https://raw.githubusercontent.com/seanrankin/chrysler/master/chrysler.rb
 
 ```
 
