@@ -1,5 +1,6 @@
 # rails-app-template.rb
 # Usage: rails new app-name --database=postgresql -m ./rails-app-templates/rails-app-template.rb
+# Usage: rails new app-name --database=postgresql -m https://raw.githubusercontent.com/seanrankin/chrysler/master/rails-app-template.rb
 
 # Ask about publishing
 publish = yes? "Do you want to publish to Heroku?"
@@ -74,8 +75,8 @@ run "touch .env"
 # append_file '.env', 'PORT=3000'
 
 # Create a default files
-run "cp ~/Projects/rails-app-templates/scripts.coffee app/assets/javascripts/scripts.coffee"
-run "cp -f ~/Projects/rails-app-templates/application.html.erb app/views/layouts/application.html.erb"
+run "cp https://raw.githubusercontent.com/seanrankin/chrysler/master/scripts.coffee app/assets/javascripts/scripts.coffee"
+run "cp -f https://raw.githubusercontent.com/seanrankin/chrysler/master/application.html.erb app/views/layouts/application.html.erb"
 
 if haml
   run "rails generate haml:application_layout convert"
