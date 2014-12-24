@@ -1,6 +1,6 @@
 # rails-app-template.rb
-# Usage: rails new app-name --database=postgresql -m ./rails-app-templates/rails-app-template.rb
-# Usage: rails new app-name --database=postgresql -m https://raw.githubusercontent.com/seanrankin/chrysler/master/rails-app-template.rb
+# Usage: rails new app-name --database=postgresql -m ./rails-app-templates/chrysler.rb
+# Usage remote: rails new app-name --database=postgresql -m https://raw.githubusercontent.com/seanrankin/chrysler/master/chrysler.rb
 
 # Ask about publishing
 publish = yes? "Do you want to publish to Heroku?"
