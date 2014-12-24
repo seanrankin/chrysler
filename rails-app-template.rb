@@ -1,12 +1,20 @@
 # rails-app-template.rb
 # Usage: rails new app-name --database=postgresql -m ./rails-app-templates/rails-app-template.rb
 
+# Ask about publishing
+publish = yes? "Do you want to publish to Heroku?"
+if publish
+  appname = ask("What do you want to call this app?")
+end
+
 # Ask the name of the app for Heroku
-appname = ask("What do you want to call this app?")
+haml = yes? "Do you want to use HAML for templating?"
+if haml
+  gem "haml"
+  gem "haml-rails"
+end
 
 # Add commonly used gems
-# gem 'haml'
-# gem 'haml-rails'
 gem "therubyracer"
 gem "less-rails"
 gem "twitter-bootstrap-rails"
@@ -41,27 +49,33 @@ run "rails g bootstrap:layout application -f"
 run "rails generate jquery:datatables:install bootstrap3"
 
 # Generate some test scaffolding
-generate(:scaffold, "User name:string")
+# generate(:scaffold, "User name:string")
 
 rake("db:migrate")
 rake("db:seed")
 
-run "rails g bootstrap:themed Users -f"
+# run "rails g bootstrap:themed Users -f"
 
-# Update the default root
-route "root to: 'users#index'"
+# Stub out a controller and update the route
+generate :controller, "Demos index show"
+route "root to: 'demos#index'"
 
 # hide secret data from git
 # append_file '.gitignore', 'config/database.yml'
 # append_file '.gitignore', '.env'
 
 # Make an env file
-run 'touch .env'
+run "touch .env"
 # append_file '.env', 'PORT=3000'
 
 # Create a default files
 run "cp ~/Projects/rails-app-templates/scripts.coffee app/assets/javascripts/scripts.coffee"
 run "cp -f ~/Projects/rails-app-templates/application.html.erb app/views/layouts/application.html.erb"
+
+if haml
+  run "rails generate haml:application_layout convert"
+  remove_file "app/views/layouts/application.html.erb"
+end
 
 # Do the initial commit
 git :init
@@ -69,11 +83,13 @@ git add: "."
 git commit: %Q{ -m 'Initial commit' }
 
 # Create and push to heroku
-run "heroku create #{appname}"
-run "git push heroku master"
-run "heroku run rake db:migrate"
-run "heroku run rake db:seed"
-run "heroku open --app #{appname}"
+if publish
+  run "heroku create #{appname}"
+  run "git push heroku master"
+  run "heroku run rake db:migrate"
+  run "heroku run rake db:seed"
+  run "heroku open --app #{appname}"
+end
 
 # Open project in Atom
 run "atom ."
