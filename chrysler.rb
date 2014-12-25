@@ -1,18 +1,24 @@
 # rails-app-template.rb
-# Usage: rails new app-name --database=postgresql -m ./rails-app-templates/chrysler.rb
+# Usage: rails new app-name --database=postgresql -m ./chrysler/chrysler.rb
 # Usage remote: rails new app-name --database=postgresql -m https://raw.githubusercontent.com/seanrankin/chrysler/master/chrysler.rb
 
-# Ask about publishing
-publish = yes? "Do you want to publish to Heroku?"
+# Get the path of the application template
+path = File.expand_path File.dirname(__FILE__)
+remotePath = "https://raw.githubusercontent.com/seanrankin/chrysler/master"
+
+# Do you want to deploy to Heroku?
+publish = yes? "Do you want to deploy to Heroku?"
 if publish
-  appname = ask("What do you want to call this app?")
+  appname = ask("What do you want to name this app?")
 end
 
-# Get the path of the application template
-# path = File.expand_path File.dirname(__FILE__)
-# run "cp #{path}/templates/Procfile Procfile"
+# Should we create a default controller?
+root_controller = yes? "Should we create a default controller?"
+if root_controller
+  root_controller_name = ask("What is the root controllers name?").underscore
+end
 
-# Ask the name of the app for Heroku
+# Do you want to use HAML for templating?
 haml = yes? "Do you want to use HAML for templating?"
 if haml
   gem "haml"
@@ -47,6 +53,12 @@ run "bundle install"
 rake("db:drop")
 rake("db:create")
 
+# Add default controller
+if root_controller
+  generate :controller, "#{root_controller_name} index"
+  route "root to: '#{root_controller_name}\#index'"
+end
+
 # Install Bootstrap 3 with Less
 run "rails generate bootstrap:install less"
 run "rails g bootstrap:layout application -f"
@@ -62,31 +74,27 @@ rake("db:seed")
 
 # run "rails g bootstrap:themed Users -f"
 
-# Stub out a controller and update the route
-generate :controller, "Demos index show"
-route "root to: 'demos#index'"
-
-# hide secret data from git
-# append_file '.gitignore', 'config/database.yml'
-# append_file '.gitignore', '.env'
-
-# Make an env file
+# Utility files
 run "touch .env"
-# append_file '.env', 'PORT=3000'
+run "touch Procfile"
+run "touch Guardfile"
 
 # Create a default files
-run "cp https://raw.githubusercontent.com/seanrankin/chrysler/master/scripts.coffee app/assets/javascripts/scripts.coffee"
-run "cp -f https://raw.githubusercontent.com/seanrankin/chrysler/master/application.html.erb app/views/layouts/application.html.erb"
+run "curl -o app/assets/javascripts/scripts.coffee #{remotePath}/scripts.coffee"
+run "curl -o app/views/layouts/application.html.erb #{remotePath}/application.html.erb"
 
 if haml
   run "rails generate haml:application_layout convert"
   remove_file "app/views/layouts/application.html.erb"
 end
 
-# Do the initial commit
+# Add git
 git :init
-git add: "."
-git commit: %Q{ -m 'Initial commit' }
+# Hide secret data from git
+append_file ".gitignore", "config/database.yml"
+append_file ".gitignore", ".env"
+# Run initial commit
+git add: ".", commit: "'-m initial commit'"
 
 # Create and push to heroku
 if publish
