@@ -28,8 +28,7 @@ To Do
 ------------
 
 1. Add (conditionaly) Devise and a base user model.
-2. Refactor to be installed from URL (so cloning isn't needed).
-3. What else goes into almost every Rails app you build?
+2. What else goes into almost every Rails app you build?
 
 Contributing
 ------------
