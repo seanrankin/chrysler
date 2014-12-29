@@ -4,9 +4,12 @@ Chrysler
 
 > ~ Walter Chrysler
 
-Ok, so maybe it's not all that hard these days to start and deploy your basic Rails apps these days -- but it can be tedious do it over and over. 
+Recently I've found myself provisioning new rails apps on an almost daily basis to either test an idea out or build a quick proof of concept. Maybe it's not all that hard to generate and deploy your basic Rails app these days -- but it can be tedious if you have to do it over and over. 
 
-Recently I've found myself provisioning new rails apps on an almost daily basis to either test an idea out or build a quick proof of concept. This Rails Application Template provisions an app with the basics (Bootstrap, HAML, etc.) and deploys your shiney new project to Heroku.
+The goal of this project was a simple (< 100 line) script that just about anyone could digest and understand prior to runnin. 
+
+Based on the same concept as projects like Rails Wizards (http://www.railswizard.org), this Rails Application Template provisions an app with the basics (Bootstrap, HAML, etc.) and deploys your shiney new project to Heroku.
+
 
 Install
 -------
